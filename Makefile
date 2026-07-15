@@ -74,20 +74,20 @@ PLIST_FILES=    lib/libSkiaSharp.so \
                 lib/libHarfBuzzSharp.so.${SOVERSION}
 
 post-extract:
-        ${MKDIR} ${WRKSRC}/third_party/externals
-        ${RLN} ${WRKDIR}/libjpeg_turbo ${WRKSRC}/third_party/externals/libjpeg-turbo
-        ${RLN} ${WRKDIR}/harfbuzz-${HARFBUZZ_REV} ${WRKSRC}/third_party/externals/harfbuzz
+	${MKDIR} ${WRKSRC}/third_party/externals
+	${RLN} ${WRKDIR}/libjpeg_turbo ${WRKSRC}/third_party/externals/libjpeg-turbo
+	${RLN} ${WRKDIR}/harfbuzz-${HARFBUZZ_REV} ${WRKSRC}/third_party/externals/harfbuzz
 do-configure:
-        cd ${WRKSRC} && ${SETENV} ${CONFIGURE_ENV} gn gen 'out' --args='${GN_ARGS}'
-        cd ${WRKSRC}/out && ninja 'HarfBuzzSharp'
+	cd ${WRKSRC} && ${SETENV} ${CONFIGURE_ENV} gn gen 'out' --args='${GN_ARGS}'
+	cd ${WRKSRC}/out && ninja 'HarfBuzzSharp'
 do-install:
-        ${INSTALL_DATA} ${BUILD_WRKSRC}/libSkiaSharp.so.${SOVERSION} \
-                ${STAGEDIR}${PREFIX}/lib
-        ${RLN} ${STAGEDIR}${PREFIX}/lib/libSkiaSharp.so.${SOVERSION} \
-                ${STAGEDIR}${PREFIX}/lib/libSkiaSharp.so
-        ${INSTALL_DATA} ${BUILD_WRKSRC}/libHarfBuzzSharp.so.${SOVERSION} \
-                ${STAGEDIR}${PREFIX}/lib
-        ${RLN} ${STAGEDIR}${PREFIX}/lib/libHarfBuzzSharp.so.${SOVERSION} \
-                ${STAGEDIR}${PREFIX}/lib/libHarfBuzzSharp.so
+	${INSTALL_DATA} ${BUILD_WRKSRC}/libSkiaSharp.so.${SOVERSION} \
+		${STAGEDIR}${PREFIX}/lib
+	${RLN} ${STAGEDIR}${PREFIX}/lib/libSkiaSharp.so.${SOVERSION} \
+		${STAGEDIR}${PREFIX}/lib/libSkiaSharp.so
+	${INSTALL_DATA} ${BUILD_WRKSRC}/libHarfBuzzSharp.so.${SOVERSION} \
+		${STAGEDIR}${PREFIX}/lib
+	${RLN} ${STAGEDIR}${PREFIX}/lib/libHarfBuzzSharp.so.${SOVERSION} \
+		${STAGEDIR}${PREFIX}/lib/libHarfBuzzSharp.so
 
 .include <bsd.port.mk>
